@@ -233,7 +233,7 @@ namespace H2P
             fullMessage.AppendLine("\t\t\tml or marginLeft=margin-left (default:10.0 mm).");
             fullMessage.AppendLine("\t\t\tht or headerTemplate=optional: \"header-template\"");
             fullMessage.AppendLine("\t\t\tft or footerTemplate=optional: \"footer-template\"");
-            fullMessage.AppendLine("\t\t\tsc or scale=scale (default:0.9).");
+            fullMessage.AppendLine("\t\t\tsc or scale=scale (default:0.95).");
             fullMessage.AppendLine("\t\t\tpr or pageRanges=\"e.g. 1 or 2-4\"");
             fullMessage.AppendLine("\t         -l:locator-type=\"locator-string\"");
             fullMessage.AppendLine("\t         locator-types: ");
@@ -246,7 +246,7 @@ namespace H2P
             fullMessage.AppendLine("\t\t\tTagName: Locates elements whose tag name matches the search value.");
             fullMessage.AppendLine("\t\t\tXpath: Locates elements matching an XPath expression.");
             fullMessage.AppendLine("Examples:");
-            fullMessage.AppendLine("-f -l:Xpath=\"//div[@class='VWDcomp WE021']//span[@class='price']\" -p:l -p:sc=0.95 -p:ml=20 -p:pr=\"1-3\" \"https://www.tagesschau.de/wirtschaft/boersenkurse/basf-aktie-basf11/\" basf");
+            fullMessage.AppendLine("-f -l:Xpath=\"//div[@class='VWDcomp WE021']//span[@class='price']\" -p:l -p:sc=0.9 -p:ml=20 -p:pr=\"1-3\" \"https://www.tagesschau.de/wirtschaft/boersenkurse/basf-aktie-basf11/\" basf");
             fullMessage.AppendLine("-f demo/index.html converted.pdf");
             MessageAndOut(fullMessage.ToString());
         }

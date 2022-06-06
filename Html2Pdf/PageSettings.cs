@@ -14,7 +14,7 @@
         public double MarginLeft { get; set; } ///<summary>Left margin in mm; default: 10 mm</summary>
         public string HeaderTemplate { get; set; } ///<summary>Optional HTML header-template</summary>
         public string FooterTemplate { get; set; } ///<summary>Optional HTML footer-template</summary>
-        public double Scale { get; set; } ///<summary>factor for shrinking the page from 0.2 to 2.0 (1.0 = original size); default: 0.9</summary>
+        public double Scale { get; set; } ///<summary>factor for shrinking the page from 0.2 to 2.0 (1.0 = original size); default: 0.95</summary>
         public string PageRanges { get; set; } ///<summary>optional: e.g. 1 or 2-4</summary>
 
         public PageSettings()
@@ -25,7 +25,7 @@
             this.MarginLeft = 10.0;
             this.HeaderTemplate = null;
             this.HeaderTemplate = null;
-            this.Scale = 0.9;
+            this.Scale = 0.95;
             this.PageRanges = null;
         }
     }
