@@ -16,9 +16,8 @@ namespace Html2Pdf
     /// Loads the driver matching the currently installed chrome browser version (chromedriver.exe).
     /// Copies the appropriate "chromedriver.exe" from the google webpage if the appropriate version
     /// hasn't been downloaded yet.
-    /// Author: Niels Swimberghe, thanks for that.
-    /// Just got his solution on .Net framework and some concerns of ChordSheetGenerator processing
-    /// adjusted, but otherwise adopted unchanged.
+    /// Author: Niels Swimberghe, special thanks for that.
+    /// I ported his solution from .Net Core to .Net Framework and made some minor adjustments, but largely adopted it unchanged.
     /// https://swimburger.net/blog/dotnet/download-the-right-chromedriver-version-and-keep-it-up-to-date-on-windows-linux-macos-using-csharp-dotnet
     /// </summary>
     public class ChromeDriverInstaller
