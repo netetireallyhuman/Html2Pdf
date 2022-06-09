@@ -1,5 +1,5 @@
 ###############################################################################
-# Prevent github from classifying this project primarily HTML.
+# Prevent github from classifying this project as primarily HTML.
 ###############################################################################
 *.html linguist-detectable=false
 ###############################################################################
