@@ -7,7 +7,7 @@
     <ProjectGuid>{1ADF3B9F-EAD4-4D99-96C2-CF8511C19BE3}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>H2P</RootNamespace>
-    <AssemblyName>H2P</AssemblyName>
+    <AssemblyName>h2p</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -22,7 +22,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\H2P.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug\h2p.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
