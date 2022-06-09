@@ -37,7 +37,7 @@ Examples:
 ```
 
 ### Requirements
-The command line tool downloads and uses 'chromedriver.exe', which in turn requires a locally installed Chrome browser. In addition, an internet connection is required.
+Html2Pdf downloads and uses 'chromedriver.exe', which in turn requires a locally installed Chrome browser. In addition, an internet connection is required.
 
 ### Special thanks to
 Niels Swimberghe
