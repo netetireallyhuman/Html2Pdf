@@ -3,7 +3,7 @@
 Use the library 'Html2Pdf.dll' in your c#-programs
 or use directly the commandline-tool 'h2p' (https://github.com/netetireallyhuman/Html2Pdf/blob/master/h2p.zip?raw=true)
 
-You can call the commandline-tool without arguments to get help:
+You can invoke the commandline-tool without arguments to get help:
 ```html
 h2p
 Insufficient arguments ()
