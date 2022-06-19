@@ -1,9 +1,9 @@
 # Html2Pdf
-### Provides a C#-library for generating PDF files from websites, locally stored HTML files, or string lists, as well as a standalone command line tool.
+### Provides a C#-library for generating PDF files from websites, locally stored HTML files, or string lists, as well as a standalone command-line tool.
 Use the library 'Html2Pdf.dll' in your c#-programs
 or use directly the commandline-tool 'h2p' (https://github.com/netetireallyhuman/Html2Pdf/blob/master/h2p.zip?raw=true)
 
-You can invoke the commandline-tool without arguments to get help:
+### You can invoke the commandline-tool without arguments to get help:
 ```html
 h2p
 Insufficient arguments ()
@@ -48,3 +48,52 @@ I ported his solution from .Net Core to .Net Framework and made some minor adjus
 ### Third-Party software used by Html2Pdf
 Selenium.WebDriver, Selenium.Support - license: Apache 2.0
 https://www.selenium.dev/documentation/about/copyright/#license
+
+### Using the library Html2Pdf in your C# code
+It is best to look at the source code of h2p.exe.
+Below is an excerpt from the H2P project's Program.cs file:
+
+```C#
+public class Program
+{
+	...
+	static async Task Main(string[] args)
+	{
+		...
+		string urlOrFilename;
+		bool isUrl;
+		string pdfFilename;
+		LocatorType locatorType;
+		string locatorString;
+		PageSettings pageSettings;
+		EvaluateArgumentsOrExit(args, out forceOverwrite, out noHeaderFooter, out urlOrFilename, out isUrl, out pdfFilename,
+			out locatorType, out locatorString, out pageSettings);
+		...
+		Console.WriteLine("generating pdf " + pdfFilename);
+		try
+		{
+			if (!isUrl)
+			{
+				await Generator.Convert(urlOrFilename, pdfFilename, noHeaderFooter, locatorType, locatorString, pageSettings);
+			}
+			else
+			{
+                
+				await Html2Pdf.Generator.Convert(new System.Uri(urlOrFilename), pdfFilename, noHeaderFooter, locatorType, locatorString, pageSettings);
+			}
+
+		}
+		catch (Exception ex)
+		{
+			MessageAndOut(ex.Message);
+		}
+		Console.WriteLine("done.");
+	}
+	...
+}
+```
+
+### Contributing
+If you find bugs or want to suggest improvements, please open a "New issue".<br/>
+
+### have fun!
