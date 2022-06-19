@@ -7,8 +7,19 @@ using System.Threading.Tasks;
 
 namespace H2P
 {
-    internal class Program
+    /// <summary>
+    /// Standalone commandline-tool for generating pdf-files from websites, html-files, or string-lists.
+    /// </summary>
+    /// <remarks>
+    /// 03.06.2022 Erik Nagel: created.
+    /// </remarks>
+    public class Program
     {
+        /// <summary>
+        /// Main program - evaluates commandline-arguments and calls Html2Pdf.Generator-methods to generate pdf.
+        /// </summary>
+        /// <param name="args">Commandline-arguments to control the program. See the method "Syntax" for details.</param>
+        /// <returns>An async Task (internally used).</returns>
         static async Task Main(string[] args)
         {
             bool forceOverwrite;

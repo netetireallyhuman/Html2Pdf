@@ -20,6 +20,9 @@ namespace Html2Pdf
     /// I ported his solution from .Net Core to .Net Framework and made some minor adjustments, but largely adopted it unchanged.
     /// https://swimburger.net/blog/dotnet/download-the-right-chromedriver-version-and-keep-it-up-to-date-on-windows-linux-macos-using-csharp-dotnet
     /// </summary>
+    /// <remarks>
+    /// 03.06.2022 Erik Nagel: created.
+    /// </remarks>
     public class ChromeDriverInstaller
     {
         private static readonly HttpClient httpClient = new HttpClient

@@ -3,10 +3,10 @@
 namespace H2P
 {
     /// <summary>
-    /// Funktion: Interface for readers providing string-lists.
+    /// Interface for readers providing string-lists.
     /// </summary>
     /// <remarks>
-    /// 03.06.2022 "Erik Nagel": created.
+    /// 03.06.2022 Erik Nagel: created.
     /// </remarks>
     public interface IRawLineReader
     {

@@ -8,24 +8,34 @@ using System.Threading.Tasks;
 
 namespace Html2Pdf
 {
-    public enum LocatorType ///<summary>Provides the various selenium-locator types.</summary>
+    ///<summary>Provides the various selenium-locator types.</summary>
+    public enum LocatorType
     {
-        None ///<summary>default</summary>
-        , ClassName ///<summary>Locates elements whose class name contains the search value(compound class names are not permitted)</summary>
-        , CssSelector ///<summary>Locates elements matching a CSS selector</summary>
-        , Id ///<summary>Locates elements whose ID attribute matches the search value</summary>
-        , Name ///<summary>Locates elements whose NAME attribute matches the search value</summary>
-        , LinkText ///<summary>Locates anchor elements whose visible text matches the search value</summary>
-        , PartialLinkText ///<summary>Locates anchor elements whose visible text contains the search value.If multiple elements are matching, only the first one will be selected.</summary>
-        , TagName ///<summary>Locates elements whose tag name matches the search value</summary>
-        , Xpath  ///<summary>Locates elements matching an XPath expression</summary>
+        ///<summary>default</summary>
+        None,
+        ///<summary>Locates elements whose class name contains the search value(compound class names are not permitted)</summary>
+        ClassName,
+        ///<summary>Locates elements matching a CSS selector</summary>
+        CssSelector,
+        ///<summary>Locates elements whose ID attribute matches the search value</summary>
+        Id,
+        ///<summary>Locates elements whose NAME attribute matches the search value</summary>
+        Name,
+        ///<summary>Locates anchor elements whose visible text matches the search value</summary>
+        LinkText,
+        ///<summary>Locates anchor elements whose visible text contains the search value.If multiple elements are matching, only the first one will be selected.</summary>
+        PartialLinkText,
+        ///<summary>Locates elements whose tag name matches the search value</summary>
+        TagName,
+        ///<summary>Locates elements matching an XPath expression</summary>
+        Xpath
     }
 
     /// <summary>
-    /// Funktion: Generates a pdf file from a website, a locally saved html file or a string-list.
+    /// Generates a pdf file from a website, a locally saved html file or a string-list.
     /// </summary>
     /// <remarks>
-    /// 03.06.2022 "Erik Nagel": created.
+    /// 03.06.2022 Erik Nagel: created.
     /// </remarks>
     public static class Generator
     {
@@ -120,6 +130,7 @@ namespace Html2Pdf
             chromeOptions.AddArguments(new List<string>() {
                  "headless", "no-sandbox", "disable-gpu" /* unsatisfactory: "log-level=3"*, senseless: "--silent" "log-level=OFF" */
             });
+            // chromeOptions.AddArgument("enable-print-browser");
             if (pageSettings == null)
             {
                 pageSettings = new PageSettings();

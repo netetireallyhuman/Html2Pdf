@@ -5,10 +5,10 @@ using System.IO;
 namespace H2P
 {
     /// <summary>
-    /// Funktion: Reads a textfile into a string-list.
+    /// Reads a textfile into a string-list.
     /// </summary>
     /// <remarks>
-    /// 03.06.2022 "Erik Nagel": created.
+    /// 03.06.2022 Erik Nagel: created.
     /// </remarks>
     public class TextFileReader : IRawLineReader
     {
