@@ -94,7 +94,7 @@ public class Program
 ```
 
 ### Documentation
-https://github.com/netetireallyhuman/Html2Pdf/releases/download/untagged-54904bd0112b3a9e215e/H2P.doc.chm
+https://github.com/netetireallyhuman/Html2Pdf/releases/latest/download/H2P.doc.chm
 
 ### Contributing
 If you find bugs or want to suggest improvements, please open an "New issue".<br/>
