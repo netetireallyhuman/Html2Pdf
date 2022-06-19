@@ -94,6 +94,6 @@ public class Program
 ```
 
 ### Contributing
-If you find bugs or want to suggest improvements, please open a "New issue".<br/>
+If you find bugs or want to suggest improvements, please open an "New issue".<br/>
 
 ### have fun!
