@@ -1,7 +1,7 @@
 # Html2Pdf
 ### Provides a C#-library for generating PDF files from websites, locally stored HTML files, or string lists, as well as a standalone command-line tool.
 Use the library 'Html2Pdf.dll' in your c#-programs
-or use directly the commandline-tool 'h2p' (https://github.com/netetireallyhuman/Html2Pdf/releases/download/untagged-54904bd0112b3a9e215e/h2p.zip)
+or use directly the commandline-tool 'h2p' (https://github.com/netetireallyhuman/Html2Pdf/releases/latest/download/h2p.zip)
 
 ### You can invoke the commandline-tool without arguments to get help:
 ```html
@@ -47,7 +47,7 @@ I ported his solution from .Net Core to .Net Framework and made some minor adjus
 
 ### Third-Party software used by Html2Pdf
 Selenium.WebDriver, Selenium.Support - license: Apache 2.0
-https://www.selenium.dev/documentation/about/copyright/#license
+https://github.com/netetireallyhuman/Html2Pdf/releases/latest/download/H2P.doc.chm
 
 ### Using the library Html2Pdf in your C# code
 It is best to look at the source code of h2p.exe.
