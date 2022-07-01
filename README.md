@@ -47,7 +47,7 @@ I ported his solution from .Net Core to .Net Framework and made some minor adjus
 
 ### Third-Party software used by Html2Pdf
 Selenium.WebDriver, Selenium.Support - license: Apache 2.0
-https://github.com/netetireallyhuman/Html2Pdf/releases/latest/download/H2P.doc.chm
+https://www.selenium.dev/documentation/about/copyright/#license
 
 ### Using the library Html2Pdf in your C# code
 It is best to look at the source code of h2p.exe.
