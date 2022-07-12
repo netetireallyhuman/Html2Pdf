@@ -97,6 +97,6 @@ public class Program
 https://github.com/netetireallyhuman/Html2Pdf/releases/latest/download/H2P.doc.chm
 
 ### Contributing
-If you find bugs or want to suggest improvements, please open an "New issue".<br/>
+If you find bugs or want to suggest improvements, please open a "New issue".<br/>
 
 ### have fun!
