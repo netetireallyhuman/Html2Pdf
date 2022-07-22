@@ -1,5 +1,5 @@
 # Html2Pdf
-### Provides a C#-library for generating PDF files from websites, locally stored HTML files, or string lists,<br/> as well as a standalone command-line tool.
+### Provides a C#-library for generating PDF files from websites, locally stored HTML files <br/>or string lists, as well as a standalone command-line tool.
 Use the library 'Html2Pdf.dll' in your c#-programs
 or use directly the commandline-tool [h2p](https://github.com/netetireallyhuman/Html2Pdf/releases/latest/download/h2p.zip)
 
