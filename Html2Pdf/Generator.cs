@@ -36,6 +36,10 @@ namespace Html2Pdf
     /// </summary>
     /// <remarks>
     /// 03.06.2022 Erik Nagel: created.
+    /// 15.08.2023 Erik Nagel: Module ChromeDriverInstaller is theoretically obsolet since Selenium.WebDriver 4.6.0.
+    ///            But during the implicite call of the new selenium-manager.exe a short flicker of a console window appears.
+    ///            Therefore the existing implementation is retained. Because google did not issue a downloadble driver for
+    ///            chrome 115, ChromeDriverInstaller had to be extended anywhere (see ChromeDriverInstaller for details).
     /// </remarks>
     public static class Generator
     {

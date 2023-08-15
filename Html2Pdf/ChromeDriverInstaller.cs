@@ -87,7 +87,28 @@ namespace Html2Pdf
             {
                 chromeVersion = await GetChromeVersion();
             }
+            // Because google didn't issue a downloadble driver for chrome 115 (see following log-extracts),
+            // ChromeDriverInstaller had to be extended.
+            // Log:
+            //     selenium-manager.exe --browser chrome --clear-cache --clear-metadata --trace
+            //     ...
+            //     DEBUG   The version of chrome is 115.0.5790.110
+            //     ...
+            //     DEBUG   Detected browser: chrome 115
+            //     ...
+            //     WARN    Error getting version of chromedriver 115. Retrying with chromedriver 114 (attempt 1/5)
+            //     DEBUG   Reading chromedriver version from https://chromedriver.storage.googleapis.com/LATEST_RELEASE_114
+            //     TRACE   Writing metadata to C:\Users\micro\.cache\selenium\selenium-manager.json
+            //     DEBUG   Required driver: chromedriver 114.0.5735.90
+            //     ...
+            //     TRACE   Downloading https://chromedriver.storage.googleapis.com/114.0.5735.90/chromedriver_win32.zip to temporal folder "C:\\Users\\micro\\AppData\\Local\\Temp\\selenium-managerO9hQVc"
+            //     ...
+            //     INFO    C:\Users\micro\.cache\selenium\chromedriver\win32\114.0.5735.90\chromedriver.exe
 
+
+
+
+            /*
             //   Take the Chrome version number, remove the last part, 
             chromeVersion = chromeVersion.Substring(0, chromeVersion.LastIndexOf('.'));
 
@@ -95,18 +116,30 @@ namespace Html2Pdf
             //   For example, with Chrome version 72.0.3626.81, you'd get a URL "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_72.0.3626".
             var chromeDriverVersionResponse = await httpClient.GetAsync($"LATEST_RELEASE_{chromeVersion}");
             if (!chromeDriverVersionResponse.IsSuccessStatusCode)
+            */
+                        // BaseAddress = new Uri("https://chromedriver.storage.googleapis.com/")
+                        // Take the Chrome version number, remove the last part.
+            string chromeDriverVersion = null;
+            string previousChromeVersion;
+            int attempts = 0;
+            while (chromeDriverVersion == null && attempts++ < 5)
             {
-                if (chromeDriverVersionResponse.StatusCode == HttpStatusCode.NotFound)
+                // if (chromeDriverVersionResponse.StatusCode == HttpStatusCode.NotFound)
+                previousChromeVersion = chromeVersion;
+                if (chromeVersion?.Contains(".") == true)
                 {
-                    throw new Exception($"ChromeDriver version not found for Chrome version {chromeVersion}");
+                    chromeVersion = chromeVersion?.Substring(0, chromeVersion.LastIndexOf('.'));
                 }
                 else
                 {
-                    throw new Exception($"ChromeDriver version request failed with status code: {chromeDriverVersionResponse.StatusCode}, reason phrase: {chromeDriverVersionResponse.ReasonPhrase}");
+                    chromeVersion = (Convert.ToInt32(previousChromeVersion) - 1).ToString();
                 }
+                chromeDriverVersion = await GetLatestAppropriateChromeDriverVersion(chromeVersion);
             }
-
-            var chromeDriverVersion = await chromeDriverVersionResponse.Content.ReadAsStringAsync();
+            if (String.IsNullOrEmpty(chromeDriverVersion))
+            {
+                throw new Exception($"ChromeDriver version not found for Chrome version {chromeVersion}");
+            }
 
             string zipName;
             string driverName;
@@ -201,7 +234,8 @@ namespace Html2Pdf
                 finally
                 {
                     chromeDriverStream.Dispose();
-                }            }
+                }
+            }
 
             // on Linux/macOS, you need to add the executable permission (+x) to allow the execution of the chromedriver
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux) || RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
@@ -233,6 +267,27 @@ namespace Html2Pdf
                     throw new Exception("Failed to make chromedriver executable");
                 }
             }
+        }
+
+        private static async Task<string> GetLatestAppropriateChromeDriverVersion(string chromeVersion)
+        {
+            // Append the result to URL "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_". 
+            // For example, with Chrome version 72.0.3626.81, you'd get a URL "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_72.0.3626".
+            var chromeDriverVersionResponse = await httpClient.GetAsync($"LATEST_RELEASE_{chromeVersion}");
+            if (!chromeDriverVersionResponse.IsSuccessStatusCode)
+            {
+                if (chromeDriverVersionResponse.StatusCode == HttpStatusCode.NotFound)
+                {
+                    // throw new Exception($"ChromeDriver version not found for Chrome version {chromeVersion}");
+                    return null;
+                }
+                else
+                {
+                    throw new Exception($"ChromeDriver version request failed with status code: {chromeDriverVersionResponse.StatusCode}, reason phrase: {chromeDriverVersionResponse.ReasonPhrase}");
+                }
+            }
+            var chromeDriverVersion = await chromeDriverVersionResponse.Content.ReadAsStringAsync();
+            return chromeDriverVersion;
         }
 
         /// <summary>
