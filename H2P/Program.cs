@@ -28,14 +28,14 @@ namespace H2P
             bool isUrl;
             string pdfFilename;
             LocatorType locatorType;
-            string locatorString;
+            string? locatorString;
             PageSettings pageSettings;
             EvaluateArgumentsOrExit(args, out forceOverwrite, out noHeaderFooter, out urlOrFilename, out isUrl, out pdfFilename,
                 out locatorType, out locatorString, out pageSettings);
             if (!forceOverwrite && File.Exists(pdfFilename))
             {
                 Console.Write($"overwrite {pdfFilename} y(es)|N(o)? ");
-                string answer = Console.ReadLine();
+                string? answer = Console.ReadLine();
                 if (String.IsNullOrEmpty(answer) || (answer.ToLower().Trim() != "y" && answer.ToLower().Trim() != "yes"))
                 {
                     Console.WriteLine("Operation aborted.");
@@ -64,13 +64,14 @@ namespace H2P
         }
 
         private static void EvaluateArgumentsOrExit(string[] args, out bool forceOverwrite, out bool noHeaderFooter,
-            out string urlOrFilename, out bool isUrl, out string pdfFilename, out LocatorType locatorType, out string locatorString, out PageSettings pageSettings)
+            out string urlOrFilename, out bool isUrl, out string pdfFilename, out LocatorType locatorType,
+            out string? locatorString, out PageSettings pageSettings)
         {
             forceOverwrite = false;
             noHeaderFooter = false;
-            urlOrFilename = null;
+            urlOrFilename = String.Empty;
             isUrl = false;
-            pdfFilename = null;
+            pdfFilename = String.Empty;
             locatorType = LocatorType.None;
             locatorString = null;
             pageSettings = new PageSettings();
@@ -197,7 +198,7 @@ namespace H2P
                     if (string.IsNullOrEmpty(urlOrFilename))
                     {
                         urlOrFilename = argument.Trim();
-                        Uri uriResult;
+                        Uri? uriResult;
                         isUrl = Uri.TryCreate(urlOrFilename, UriKind.Absolute, out uriResult)
                             && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
                         if (!isUrl && !File.Exists(urlOrFilename))
@@ -229,10 +230,14 @@ namespace H2P
 
         private static void Syntax(string message)
         {
+            string programName = Assembly.GetExecutingAssembly().GetName().Name?.ToLower() ?? "programName";
+            string programNameVersion = programName + " "
+                + System.Reflection.Assembly.GetEntryAssembly()?.GetName().Version?.ToString() ?? "";
             StringBuilder fullMessage = new StringBuilder(message + Environment.NewLine);
-            fullMessage.Append("Syntax:\t" + Assembly.GetExecutingAssembly().GetName().Name.ToLower());
+            fullMessage.AppendLine(programNameVersion);
+            fullMessage.Append("Syntax:\t" + programName);
             fullMessage.AppendLine(" [options] url(website address) pdf-filename[.pdf]");
-            fullMessage.Append("\t" + Assembly.GetExecutingAssembly().GetName().Name.ToLower());
+            fullMessage.Append("\t" + programName);
             fullMessage.AppendLine(" [options] html-filename(locally saved html-file) pdf-filename[.pdf]");
             fullMessage.AppendLine("\tOptions: -f(force overwriting)");
             fullMessage.AppendLine("\t         -n(no header, no footer)");

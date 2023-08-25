@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "H2P": {
+      "commandName": "Project",
+      "commandLineArgs": "-f -l:Xpath=\"//div[@class='VWDcomp WE021']//span[@class='price']\" -p:l -p:sc=0.9 -p:ml=20 -p:pr=\"1-3\" \"https://www.tagesschau.de/wirtschaft/boersenkurse/basf-aktie-basf11/\" basf"
+    }
+  }
+}

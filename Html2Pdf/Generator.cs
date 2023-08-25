@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using NetEti.WebTools;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using System;
@@ -43,8 +44,6 @@ namespace Html2Pdf
     /// </remarks>
     public static class Generator
     {
-        private static bool _isChromeDriverInstalled = false;
-
         /// <summary>
         /// Generates a pdf-file from a locally saved html-file.
         /// </summary>
@@ -53,7 +52,8 @@ namespace Html2Pdf
         /// <param name="noHeaderFooter">If true, no site-headers and site-footers are added.</param>
         /// <param name="pageSettings">A container with print-parameters.</param>
         /// <returns>A async Task.</returns>
-        public static async Task Convert(string htmlFileName, string pdfFileName, bool noHeaderFooter = false, PageSettings pageSettings = null)
+        public static async Task Convert(string htmlFileName, string pdfFileName, bool noHeaderFooter = false,
+            PageSettings? pageSettings = null)
         {
             Uri uri = new System.Uri(Path.GetFullPath(htmlFileName));
             await Convert(htmlFileName, pdfFileName, noHeaderFooter, LocatorType.None, null);
@@ -70,7 +70,7 @@ namespace Html2Pdf
         /// <param name="pageSettings">A container with print-parameters.</param>
         /// <returns>A async Task.</returns>
         public static async Task Convert(string htmlFileName, string pdfFileName, bool noHeaderFooter = false,
-            LocatorType locatorType = LocatorType.None, string locatorString = null, PageSettings pageSettings = null)
+            LocatorType locatorType = LocatorType.None, string? locatorString = null, PageSettings? pageSettings = null)
         {
             Uri uri = new System.Uri(Path.GetFullPath(htmlFileName));
             await Convert(uri, pdfFileName, noHeaderFooter, locatorType, locatorString, pageSettings);
@@ -84,7 +84,8 @@ namespace Html2Pdf
         /// <param name="noHeaderFooter">If true, no site-headers and site-footers are added.</param>
         /// <param name="pageSettings">A container with print-parameters.</param>
         /// <returns>A async Task.</returns>
-        public static async Task Convert(List<string> htmlFileLines, string pdfFileName, bool noHeaderFooter = false, PageSettings pageSettings = null)
+        public static async Task Convert(List<string> htmlFileLines, string pdfFileName, bool noHeaderFooter = false,
+            PageSettings? pageSettings = null)
         {
             string htmlFileName = Path.GetFullPath(Path.Combine(Path.GetTempPath(), "index.html"));
             File.WriteAllLines(htmlFileName, htmlFileLines);
@@ -100,7 +101,8 @@ namespace Html2Pdf
         /// <param name="noHeaderFooter">If true, no site-headers and site-footers are added.</param>
         /// <param name="pageSettings">A container with print-parameters.</param>
         /// <returns>A async Task.</returns>
-        public static async Task Convert(Uri uri, string pdfFileName, bool noHeaderFooter = false, PageSettings pageSettings = null)
+        public static async Task Convert(Uri uri, string pdfFileName, bool noHeaderFooter = false,
+            PageSettings? pageSettings = null)
         {
             await Convert(uri, pdfFileName, noHeaderFooter, LocatorType.None, null, pageSettings);
         }
@@ -116,16 +118,15 @@ namespace Html2Pdf
         /// <param name="pageSettings">A container with print-parameters.</param>
         /// <returns>A async Task.</returns>
         public static async Task Convert(Uri uri, string pdfFileName, bool noHeaderFooter = false,
-            LocatorType locatorType = LocatorType.None, string locatorString = null, PageSettings pageSettings = null)
+            LocatorType locatorType = LocatorType.None, string? locatorString = null, PageSettings? pageSettings = null)
         {
-            await InstallChromeDriver();
-
             var absoluteUri = uri.AbsoluteUri;
             Print2Pdf(absoluteUri, pdfFileName, noHeaderFooter, locatorType, locatorString, pageSettings);
+            await Task.Run(() => { Task.Delay(1); }); // just to suppress "no await"-warning.
         }
 
         private static void Print2Pdf(string uri, string pdfName, bool noHeaderFooter = false,
-            LocatorType locatorType = LocatorType.None, string locatorString = null, PageSettings pageSettings = null)
+            LocatorType locatorType = LocatorType.None, string? locatorString = null, PageSettings? pageSettings = null)
         {
             ChromeDriverService service = ChromeDriverService.CreateDefaultService(Directory.GetCurrentDirectory());
             service.SuppressInitialDiagnosticInformation = true;
@@ -139,10 +140,11 @@ namespace Html2Pdf
             {
                 pageSettings = new PageSettings();
             }
-            using (var driver = new ChromeDriver(service, chromeOptions))
+            //using (var driver = new ChromeDriver(service, chromeOptions))
+            using (ChromeScraper chromeScraper = new ChromeScraper(uri, 10, new ChromeOptions()))
             {
-                driver.Navigate().GoToUrl(uri);
-                By locator = null;
+                IWebDriver driver = chromeScraper.WebDriver ?? throw new ApplicationException("No chromedriver available.");
+                By? locator = null;
                 if (locatorType != LocatorType.None)
                 {
                     switch (locatorType)
@@ -211,30 +213,10 @@ namespace Html2Pdf
                     printOptions.Add("pageRanges", pageSettings.PageRanges);
                 }
                 Dictionary<string, object> printOutput;
-                printOutput = driver.ExecuteCdpCommand("Page.printToPDF", printOptions) as Dictionary<string, object>;
-                byte[] pdf = System.Convert.FromBase64String(printOutput["data"] as string);
+                printOutput = (Dictionary<string, object>)((ChromeDriver)driver).ExecuteCdpCommand("Page.printToPDF", printOptions);
+                byte[] pdf = System.Convert.FromBase64String((string)printOutput["data"]);
                 File.WriteAllBytes(pdfName, pdf);
             }
         }
-
-        private static async Task InstallChromeDriver()
-        {
-            if (_isChromeDriverInstalled)
-            {
-                return;
-            }
-
-            ChromeDriverInstaller chromeDriverInstaller = new ChromeDriverInstaller();
-
-            // not necessary, but added for logging purposes
-            var chromeVersion = await chromeDriverInstaller.GetChromeVersion();
-            // Console.WriteLine($"Chrome version {chromeVersion} detected");
-
-            await chromeDriverInstaller.Install(chromeVersion, Directory.GetCurrentDirectory());
-            // Console.WriteLine("ChromeDriver installed");
-
-            _isChromeDriverInstalled = true;
-        }
-
     }
 }

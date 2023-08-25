@@ -17,13 +17,13 @@
         ///<summary>Left margin in mm; default: 10 mm</summary>
         public double MarginLeft { get; set; }
         ///<summary>Optional HTML header-template</summary>
-        public string HeaderTemplate { get; set; }
+        public string? HeaderTemplate { get; set; }
         ///<summary>Optional HTML footer-template</summary>
-        public string FooterTemplate { get; set; }
+        public string? FooterTemplate { get; set; }
         ///<summary>factor for shrinking the page from 0.2 to 2.0 (1.0 = original size); default: 0.95</summary>
         public double Scale { get; set; }
         ///<summary>optional: e.g. 1 or 2-4</summary>
-        public string PageRanges { get; set; }
+        public string? PageRanges { get; set; }
 
         /// <summary>
         /// Static constructor - sets the defaults.
