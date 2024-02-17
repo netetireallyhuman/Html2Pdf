@@ -11,7 +11,7 @@
     <Authors>Erik Nagel</Authors>
     <Company>NetEti</Company>
     <Product>$(AssemblyName)</Product>
-    <Copyright>Copyright © $(Authors) 2022-2023</Copyright>
+    <Copyright>Copyright © $(Authors) 2022-$([System.DateTime]::Now.Year)</Copyright>
     <PackageTags>html pdf converter</PackageTags>
     <AssemblyVersion>8.0.0.0</AssemblyVersion>
     <FileVersion>8.0.0.0</FileVersion>
